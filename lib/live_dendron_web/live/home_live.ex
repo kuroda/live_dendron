@@ -1,12 +1,21 @@
 defmodule LiveDendronWeb.HomeLive do
   use Phoenix.LiveView
-  alias LiveDendron.Core
+  alias LiveDendron.HomeLiveState
 
   def render(assigns), do: LiveDendronWeb.HomeLiveView.render("main.html", assigns)
 
   def mount(_session, socket) do
-    socket = assign(socket, :teams, Core.list_teams())
+    socket = assign(socket, :state, HomeLiveState.construct())
 
     {:ok, socket}
+  end
+
+  def handle_event("select_team", id, socket) do
+    socket =
+      update(socket, :state, fn state ->
+        HomeLiveState.select_team(state, id)
+      end)
+
+    {:noreply, socket}
   end
 end

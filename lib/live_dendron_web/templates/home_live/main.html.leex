@@ -1,5 +1,8 @@
-<ul>
-  <%= for team <- @teams do %>
-    <li><%= team.name %></li>
-  <% end %>
-</ul>
+<main>
+  <%= render("list_of_teams.html", state: @state) %>
+  <%=
+    if @state.selected_team != :none do
+      render("selected_team.html", state: @state, name: @state.selected_team.name)
+    end
+  %>
+</main>

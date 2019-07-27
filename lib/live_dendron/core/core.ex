@@ -8,4 +8,9 @@ defmodule LiveDendron.Core do
     from(t in Core.Team, order_by: t.name)
     |> Repo.all()
   end
+
+  @doc false
+  def fetch_team(id) do
+    Repo.get!(Core.Team, id)
+  end
 end

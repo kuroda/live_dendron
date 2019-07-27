@@ -1,0 +1,9 @@
+<h1>List of teams</h1>
+
+<ul>
+  <%= for team <- @state.teams do %>
+    <li>
+      <a phx-click="select_team" phx-value="<%= team.id %>"><%= team.name %></a>
+    </li>
+  <% end %>
+</ul>
