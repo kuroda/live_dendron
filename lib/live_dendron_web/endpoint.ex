@@ -1,6 +1,8 @@
 defmodule LiveDendronWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :live_dendron
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", LiveDendronWeb.UserSocket,
     websocket: true,
     longpoll: false
