@@ -18,11 +18,6 @@ defmodule LiveDendronWeb.Router do
   scope "/", LiveDendronWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/", HomeController, :show
   end
-
-  # Other scopes may use custom stacks.
-  # scope "/api", LiveDendronWeb do
-  #   pipe_through :api
-  # end
 end
