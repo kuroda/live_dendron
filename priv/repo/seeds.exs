@@ -1,11 +1,14 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     LiveDendron.Repo.insert!(%LiveDendron.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+import LiveDendron.Repo
+alias LiveDendron.Core
+
+Core.Team |> delete_all()
+
+filenames = ~w(
+  alpha
+  beta
+  gamma
+)
+
+Enum.map(filenames, fn filename ->
+  Code.eval_file("./priv/repo/seeds/#{filename}.exs")
+end)
