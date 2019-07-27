@@ -3,9 +3,9 @@ use Mix.Config
 # Configure your database
 config :live_dendron, LiveDendron.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "",
   database: "live_dendron_test",
-  hostname: "localhost",
+  hostname: "db",
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,
