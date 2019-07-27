@@ -1,0 +1,17 @@
+version: '3'
+services:
+  db:
+    image: postgres:11-alpine
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data:cached
+  app:
+    build: .
+    command: mix phx.server
+    volumes:
+      - .:/app:cached
+    working_dir: /app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+    tty: true
