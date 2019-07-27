@@ -21,3 +21,6 @@ COPY . /app
 USER devel
 
 WORKDIR /app
+
+RUN mix local.hex --force
+RUN mix local.rebar --force
