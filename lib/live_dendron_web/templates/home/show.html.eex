@@ -1,1 +1,8 @@
-show.html.eex
+<div id="wrapper">
+  <%=
+    live_render(
+      @conn,
+      LiveDendronWeb.HomeLive
+    )
+  %>
+</div>
