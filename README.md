@@ -10,5 +10,7 @@
 ```
 $ git clone git@github.com:kuroda/live_dendron.git
 $ cd live_dendron
+$ ./setup_db.sh
+$ ./npm_install.sh
 $ docker-compose up
 ```
