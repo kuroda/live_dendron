@@ -1,1 +1,5 @@
-main.html.leex
+<ul>
+  <%= for team <- @teams do %>
+    <li><%= team.name %></li>
+  <% end %>
+</ul>
