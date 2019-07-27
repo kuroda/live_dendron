@@ -12,5 +12,12 @@ $ git clone git@github.com:kuroda/live_dendron.git
 $ cd live_dendron
 $ ./setup_db.sh
 $ ./npm_install.sh
+```
+
+## Starting the server
+
+```
 $ docker-compose up
 ```
+
+You can play with this demo by opening http://localhost:4000 with you browser.
