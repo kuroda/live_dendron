@@ -2,3 +2,14 @@
 
 @import "./phoenix.css";
 @import "../../deps/phoenix_live_view/assets/css/live_view.css";
+
+a[phx-click] {
+  cursor: pointer;
+}
+a[phx-click]:hover {
+  text-decoration: underline;
+}
+a.current_team {
+  font-weight: bold;
+  color: black;
+}
