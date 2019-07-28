@@ -1,7 +1,7 @@
 <%
-  error = Keyword.get(@team.changeset.errors, :name)
+  error = Keyword.get(@state.selected_team.changeset.errors, :name)
 %>
-<%= form_for @team.changeset, "#", [phx_submit: "update_team_name"], fn f -> %>
+<%= form_for @state.selected_team.changeset, "#", [phx_submit: "update_team_name"], fn f -> %>
   <div>
     <label>Name</label>
     <% class = if error, do: "has-error", else: "" %>

@@ -3,7 +3,10 @@
 <ul>
   <%= for team <- @state.teams do %>
     <li>
-      <% class = if team.id == @state.selected_team_id, do: "current_team", else: "" %>
+      <%
+        class = if @state.selected_team && team.id == @state.selected_team.id,
+          do: "current_team", else: ""
+      %>
       <a phx-click="select_team" phx-value="<%= team.id %>" class="<%= class %>">
         <%= team.name %>
       </a>

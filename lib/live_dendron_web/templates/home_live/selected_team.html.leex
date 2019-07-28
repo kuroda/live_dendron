@@ -1,12 +1,9 @@
-<%
-  team = Enum.find(@state.teams, fn t -> t.id == @state.selected_team_id end)
-%>
 <hr>
 
 <%=
-  if team.being_edited do
-    render("team_name_editor.html", team: team)
+  if @state.selected_team.being_edited do
+    render("team_name_editor.html", state: @state)
   else
-    render("team_name.html", team: team)
+    render("team_name.html", state: @state)
   end
 %>
