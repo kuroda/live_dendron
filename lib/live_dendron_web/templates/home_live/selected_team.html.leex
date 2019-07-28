@@ -1,9 +1,9 @@
 <hr>
 
 <%=
-  if @state.selected_team.being_edited do
-    render("team_name_editor.html", state: @state)
+  if @team_editor.activated do
+    render("team_name_editor.html", assigns)
   else
-    render("team_name.html", state: @state)
+    render("team_name.html", assigns)
   end
 %>

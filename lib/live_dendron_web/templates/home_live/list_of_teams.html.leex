@@ -1,11 +1,12 @@
 <h1>List of teams</h1>
 
 <ul>
-  <%= for team <- @state.teams do %>
+  <%= for team <- @teams do %>
     <li>
       <%
-        class = if @state.selected_team && team.id == @state.selected_team.id,
-          do: "current_team", else: ""
+        class =
+          if @team_editor && team.id == @team_editor.team.id,
+            do: "current_team", else: ""
       %>
       <a phx-click="select_team" phx-value="<%= team.id %>" class="<%= class %>">
         <%= team.name %>

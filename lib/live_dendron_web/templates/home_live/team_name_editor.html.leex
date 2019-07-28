@@ -1,7 +1,7 @@
 <%
-  error = Keyword.get(@state.selected_team.changeset.errors, :name)
+  error = Keyword.get(@team_editor.changeset.errors, :name)
 %>
-<%= form_for @state.selected_team.changeset, "#", [phx_submit: "update_team_name"], fn f -> %>
+<%= form_for @team_editor.changeset, "#", [phx_submit: "update_team_name"], fn f -> %>
   <div>
     <label>Name</label>
     <% class = if error, do: "has-error", else: "" %>
@@ -14,6 +14,6 @@
   <% end %>
   <div style="text-align: right">
     <button type="submit">OK</button>
-    <button type="button" phx-click="toggle_team_field" phx-value="being_edited">Cancel</button>
+    <button type="button" phx-click="toggle_team_field" phx-value="activated">Cancel</button>
   </div>
 <% end %>
