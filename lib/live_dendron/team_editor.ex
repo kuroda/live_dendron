@@ -1,12 +1,14 @@
 defmodule LiveDendron.TeamEditor do
   alias LiveDendron.Core
+  alias LiveDendron.TreeEditor
 
-  defstruct team: nil, activated: false, changeset: nil
+  defstruct team: nil, tree_editor: nil, activated: false, changeset: nil
 
   @doc false
   def construct(team) do
     %__MODULE__{
-      team: team
+      team: team,
+      tree_editor: TreeEditor.Root.equip(:erlang.binary_to_term(team.organization_tree))
     }
   end
 
