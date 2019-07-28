@@ -23,10 +23,41 @@ defmodule LiveDendron.HomeLiveState do
   def toggle_team_field(%__MODULE__{} = state, "being_edited") do
     teams = Enum.map(state.teams, fn team ->
       if team.id == state.selected_team_id do
-        %{team | being_edited: not team.being_edited}
+        if team.being_edited do
+          %{team | being_edited: false}
+        else
+          %{team | being_edited: true, changeset: Core.Team.changeset(team, %{})}
+        end
       else
         team
       end
+    end)
+
+    %{state | teams: teams}
+  end
+
+  def update_team_name(%__MODULE__{selected_team_id: id} = state, %{"name" => name}) do
+    team = Enum.find(state.teams, fn t -> t.id == id end)
+
+    case Core.update_team_name(team, name) do
+      {:ok, struct} -> replace_team(state, struct)
+      {:error, changeset} -> replace_team(state, changeset)
+    end
+  end
+
+  defp replace_team(%__MODULE__{selected_team_id: id} = state, %Core.Team{} = team) do
+    team = %{team | being_edited: false, changeset: nil}
+
+    teams = Enum.map(state.teams, fn t ->
+      if t.id == id, do: team, else: t
+    end)
+
+    %{state | teams: teams}
+  end
+
+  defp replace_team(%__MODULE__{selected_team_id: id} = state, %Ecto.Changeset{} = cs) do
+    teams = Enum.map(state.teams, fn t ->
+      if t.id == id, do: %{t | changeset: cs}, else: t
     end)
 
     %{state | teams: teams}

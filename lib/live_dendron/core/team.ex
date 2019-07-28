@@ -7,6 +7,7 @@ defmodule LiveDendron.Core.Team do
     field(:name, :string)
     field(:organization_tree, :binary)
     field(:being_edited, :boolean, default: false, virtual: true)
+    field(:changeset, :any, virtual: true)
 
     timestamps()
   end

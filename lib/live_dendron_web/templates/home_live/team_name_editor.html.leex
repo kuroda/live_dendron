@@ -1,4 +1,10 @@
-  Editor
+<%= form_for @team.changeset, "#", [phx_submit: "update_team_name"], fn f -> %>
+  <div>
+    <label>Name</label>
+    <%= text_input f, :name, style: "width: 150px" %>
+  </div>
   <div style="text-align: right">
+    <button type="submit">OK</button>
     <button type="button" phx-click="toggle_team_field" phx-value="being_edited">Cancel</button>
   </div>
+<% end %>

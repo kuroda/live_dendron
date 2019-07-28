@@ -13,4 +13,11 @@ defmodule LiveDendron.Core do
   def fetch_team(id) do
     Repo.get!(Core.Team, id)
   end
+
+  @doc false
+  def update_team_name(team, name) do
+    team
+    |> Core.Team.changeset(%{"name" => name})
+    |> Repo.update()
+  end
 end

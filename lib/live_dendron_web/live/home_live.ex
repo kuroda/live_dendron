@@ -27,4 +27,13 @@ defmodule LiveDendronWeb.HomeLive do
 
     {:noreply, socket}
   end
+
+  def handle_event("update_team_name", %{"team" => team_params} = _params, socket) do
+    socket =
+      update(socket, :state, fn state ->
+        HomeLiveState.update_team_name(state, team_params)
+      end)
+
+    {:noreply, socket}
+  end
 end
