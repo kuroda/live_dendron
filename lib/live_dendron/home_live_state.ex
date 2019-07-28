@@ -44,7 +44,7 @@ defmodule LiveDendron.HomeLiveState do
     teams =
       state.teams
       |> Enum.map(fn t -> if t.id == selected_team.id, do: team, else: t end)
-      |> Enum.sort(fn (a, b) -> a.name <= b.name end)
+      |> Enum.sort(fn a, b -> a.name <= b.name end)
 
     %{state | teams: teams, selected_team: team}
   end
