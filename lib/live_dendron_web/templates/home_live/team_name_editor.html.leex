@@ -1,8 +1,17 @@
+<%
+  error = Keyword.get(@team.changeset.errors, :name)
+%>
 <%= form_for @team.changeset, "#", [phx_submit: "update_team_name"], fn f -> %>
   <div>
     <label>Name</label>
-    <%= text_input f, :name, style: "width: 150px" %>
+    <% class = if error, do: "has-error", else: "" %>
+    <%= text_input f, :name, style: "width: 150px", class: class %>
   </div>
+  <%= if error do %>
+    <div style="color: red">
+      Name <%= elem(error, 0) %>.
+    </div>
+  <% end %>
   <div style="text-align: right">
     <button type="submit">OK</button>
     <button type="button" phx-click="toggle_team_field" phx-value="being_edited">Cancel</button>

@@ -13,3 +13,7 @@ a.current_team {
   font-weight: bold;
   color: black;
 }
+
+input[type="text"].has-error {
+  border-color: red;
+}
