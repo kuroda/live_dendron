@@ -7,3 +7,5 @@
     render("team_name.html", assigns)
   end
 %>
+
+<%= render("organization_tree.html", root: @team_editor.tree_editor) %>

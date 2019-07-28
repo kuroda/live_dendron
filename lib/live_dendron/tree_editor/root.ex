@@ -2,7 +2,7 @@ defmodule LiveDendron.TreeEditor.Root do
   alias LiveDendron.Tree
   alias LiveDendron.TreeEditor
 
-  defstruct groups: [], members: [], expanded: false, changeset: nil, uuid: nil
+  defstruct groups: [], members: [], expanded: true, changeset: nil, uuid: nil
 
   def equip(%Tree.Root{} = root) do
     %__MODULE__{

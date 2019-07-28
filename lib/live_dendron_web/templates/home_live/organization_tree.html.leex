@@ -1,0 +1,11 @@
+<h2>Organization tree</h2>
+
+<div class="tree-node">
+  <span class="toggler"><%= fa_icon("angle-down") %></span>
+  <%= for group <- @root.groups do %>
+    <%= render "group.html", group: group %>
+  <% end %>
+  <%= for member <- @root.members do %>
+    <%= render "member.html", member: member %>
+  <% end %>
+</div>

@@ -17,3 +17,20 @@ a.current_team {
 input[type="text"].has-error {
   border-color: red;
 }
+
+div.tree-node {
+  margin-left: 2.5rem;
+  padding: 0.5rem;
+}
+
+span.toggler, span.square {
+  background-color: #444;
+  color: white;
+  width: 2.5rem;
+  border: solid 1px #bbb;
+  border-radius: 0.25rem;
+  /* font-size: 75%; */
+  display: inline-block;
+  text-align: center;
+  user-select: none;
+}
