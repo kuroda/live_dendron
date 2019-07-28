@@ -1,3 +1,17 @@
+<%
+  team = Enum.find(@state.teams, fn t -> t.id == @state.selected_team_id end)
+%>
 <hr>
 
-<h1><%= @name %></h1>
+<%= if team.being_edited do %>
+  Editor
+  <div style="text-align: right">
+    <button type="button" phx-click="toggle_team_field" phx-value="being_edited">Cancel</button>
+  </div>
+<% else %>
+  <h1><%= team.name %></h1>
+
+  <div style="text-align: right">
+    <button type="button" phx-click="toggle_team_field" phx-value="being_edited">Edit name</button>
+  </div>
+<% end %>

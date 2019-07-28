@@ -4,8 +4,9 @@ defmodule LiveDendron.Core.Team do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "core_teams" do
-    field :name, :string
+    field(:name, :string)
     field(:organization_tree, :binary)
+    field(:being_edited, :boolean, default: false, virtual: true)
 
     timestamps()
   end

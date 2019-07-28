@@ -1,8 +1,8 @@
 <main>
   <%= render("list_of_teams.html", state: @state) %>
   <%=
-    if @state.selected_team != :none do
-      render("selected_team.html", state: @state, name: @state.selected_team.name)
+    if @state.selected_team_id do
+      render("selected_team.html", state: @state)
     end
   %>
 </main>

@@ -18,4 +18,13 @@ defmodule LiveDendronWeb.HomeLive do
 
     {:noreply, socket}
   end
+
+  def handle_event("toggle_team_field", "being_edited" = field, socket) do
+    socket =
+      update(socket, :state, fn state ->
+        HomeLiveState.toggle_team_field(state, field)
+      end)
+
+    {:noreply, socket}
+  end
 end
