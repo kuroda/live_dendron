@@ -41,9 +41,10 @@ defmodule LiveDendron.HomeLiveState do
   defp replace_team(%__MODULE__{selected_team: selected_team} = state, %Core.Team{} = team) do
     team = %{team | being_edited: false, changeset: nil}
 
-    teams = Enum.map(state.teams, fn t ->
-      if t.id == selected_team.id, do: team, else: t
-    end)
+    teams =
+      state.teams
+      |> Enum.map(fn t -> if t.id == selected_team.id, do: team, else: t end)
+      |> Enum.sort(fn (a, b) -> a.name <= b.name end)
 
     %{state | teams: teams, selected_team: team}
   end
