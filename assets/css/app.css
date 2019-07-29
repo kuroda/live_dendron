@@ -29,8 +29,15 @@ span.toggler, span.square {
   width: 2.5rem;
   border: solid 1px #bbb;
   border-radius: 0.25rem;
-  /* font-size: 75%; */
   display: inline-block;
   text-align: center;
   user-select: none;
+}
+
+span.toggler[phx-click] {
+  cursor: pointer;
+}
+
+span.toggler[phx-click]:hover {
+  background-color: #844;
 }
