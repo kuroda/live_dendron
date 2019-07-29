@@ -1,3 +1,11 @@
 <div class="tree-node">
-  <span class="square">&nbsp;</span> <%= @member.name %>
+  <span class="square">&nbsp;</span>
+  <%= if @member.changeset do %>
+    <%= render "name_editor.html", changeset: @member.changeset, uuid: @member.uuid %>
+  <% else %>
+    <%= @member.name %>
+    <span class="command-button" phx-click="edit_node" phx-value="<%= @member.uuid %>">
+      <%= fa_icon("edit") %>
+    </span>
+  <% end %>
 </div>
