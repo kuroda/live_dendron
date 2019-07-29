@@ -2,7 +2,17 @@
   <span class="toggler" phx-click="toggle_group_expanded" phx-value="<%= @group.uuid %>">
     <%= if @group.expanded, do: fa_icon("angle-down"), else: fa_icon("angle-right") %>
   </span>
-  <%= @group.name %>
+  <%= if @group.changeset do %>
+    Editor
+    <span class="command-button" phx-click="edit_node" phx-value="">
+      <%= fa_icon("window-close") %>
+    </span>
+  <% else %>
+    <%= @group.name %>
+    <span class="command-button" phx-click="edit_node" phx-value="<%= @group.uuid %>">
+      <%= fa_icon("edit") %>
+    </span>
+  <% end %>
   <%= if @group.expanded do %>
     <%= for group <- @group.subgroups do %>
       <%= render "group.html", group: group %>

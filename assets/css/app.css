@@ -41,3 +41,11 @@ span.toggler[phx-click] {
 span.toggler[phx-click]:hover {
   background-color: #844;
 }
+
+span.command-button[phx-click] {
+  cursor: pointer;
+}
+
+span.command-button[phx-click]:hover {
+  color: #a44;
+}
