@@ -57,7 +57,37 @@ defmodule LiveDendron.TreeEditor do
   end
 
   @doc false
-  def update_node_name(%TeamEditor{} = editor, _uuid, _params) do
-    editor
+  def update_node_name(%TeamEditor{} = editor, uuid, params) do
+    tree_editor = do_update_node_name(editor.tree_editor, uuid, params)
+    %{editor | tree_editor: tree_editor}
+  end
+
+  defp do_update_node_name(%TreeEditor.Root{} = root, uuid, params) do
+    groups = Enum.map(root.groups, fn g -> do_update_node_name(g, uuid, params) end)
+    members = Enum.map(root.members, fn m -> do_update_node_name(m, uuid, params) end)
+    %{root | groups: groups, members: members}
+  end
+
+  @name_holder_modules [TreeEditor.Group, TreeEditor.Member]
+  defp do_update_node_name(%mod{uuid: u} = group, uuid, params)
+      when u == uuid and mod in @name_holder_modules do
+    cs = TreeEditor.NameHolder.changeset(group.changeset, params)
+
+    if cs.valid? do
+      name_holder = Ecto.Changeset.apply_changes(cs)
+      %{group | name: name_holder.name, changeset: nil}
+    else
+      %{group | changeset: cs}
+    end
+  end
+
+  defp do_update_node_name(%TreeEditor.Group{} = group, uuid, params) do
+    subgroups = Enum.map(group.subgroups, fn g -> do_update_node_name(g, uuid, params) end)
+    members = Enum.map(group.members, fn m -> do_update_node_name(m, uuid, params) end)
+    %{group | subgroups: subgroups, members: members, changeset: nil}
+  end
+
+  defp do_update_node_name(%TreeEditor.Member{} = member, _uuid, _params) do
+    %{member | changeset: nil}
   end
 end

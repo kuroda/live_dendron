@@ -1,7 +1,16 @@
+<%
+  error = Keyword.get(@changeset.errors, :name)
+  class = if error, do: "has-error", else: ""
+%>
 <%= form_for @changeset, "#",
   [as: :node, class: "name-editor", phx_submit: "update_node_name"], fn f -> %>
   <input type="hidden" name="uuid" value="<%= @uuid %>">
-  <%= text_input f, :name %>
+  <%= text_input f, :name, class: class %>
   <button type="submit">OK</button>
   <button type="button" phx-click="edit_node" phx-value="" class="cancel">Cancel</button>
+<% end %>
+<%= if error do %>
+  <div style="color: red; margin-left: 3rem">
+    Name <%= elem(error, 0) %>.
+  </div>
 <% end %>
