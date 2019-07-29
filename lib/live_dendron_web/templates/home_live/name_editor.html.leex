@@ -1,4 +1,7 @@
-Editor
-<span class="command-button" phx-click="edit_node" phx-value="">
-  <%= fa_icon("window-close") %>
-</span>
+<%= form_for @changeset, "#",
+  [as: :node, class: "name-editor", phx_submit: "update_node_name"], fn f -> %>
+  <input type="hidden" name="uuid" value="<%= @uuid %>">
+  <%= text_input f, :name %>
+  <button type="submit">OK</button>
+  <button type="button" phx-click="edit_node" phx-value="">Cancel</button>
+<% end %>

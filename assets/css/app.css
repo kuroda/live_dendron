@@ -49,3 +49,14 @@ span.command-button[phx-click] {
 span.command-button[phx-click]:hover {
   color: #a44;
 }
+
+form.name-editor {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25rem;
+}
+
+form.name-editor input[type="text"] {
+  width: auto;
+  margin: 0;
+}

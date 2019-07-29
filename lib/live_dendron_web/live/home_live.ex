@@ -61,6 +61,15 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_event("update_node_name", %{"uuid" => uuid, "node" => node_params}, socket) do
+    socket =
+      update(socket, :team_editor, fn team_editor ->
+        Tree.update_node_name(team_editor, uuid, node_params)
+      end)
+
+    {:noreply, socket}
+  end
+
   defp replace_team(socket, %Core.Team{} = struct) do
     teams =
       socket.assigns.teams

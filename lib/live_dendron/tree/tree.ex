@@ -55,4 +55,9 @@ defmodule LiveDendron.Tree do
   defp do_edit_node(%TreeEditor.Member{} = member, _uuid) do
     %{member | changeset: nil}
   end
+
+  @doc false
+  def update_node_name(%TeamEditor{} = editor, _uuid, _params) do
+    editor
+  end
 end
