@@ -2,7 +2,7 @@ defmodule LiveDendronWeb.HomeLive do
   use Phoenix.LiveView
   alias LiveDendron.Core
   alias LiveDendron.TeamEditor
-  alias LiveDendron.Tree
+  alias LiveDendron.TreeEditor
 
   def render(assigns), do: LiveDendronWeb.HomeLiveView.render("main.html", assigns)
 
@@ -46,7 +46,7 @@ defmodule LiveDendronWeb.HomeLive do
   def handle_event("toggle_group_expanded", uuid, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
-        Tree.toggle_group_expanded(team_editor, uuid)
+        TreeEditor.toggle_group_expanded(team_editor, uuid)
       end)
 
     {:noreply, socket}
@@ -55,7 +55,7 @@ defmodule LiveDendronWeb.HomeLive do
   def handle_event("edit_node", uuid, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
-        Tree.edit_node(team_editor, uuid)
+        TreeEditor.edit_node(team_editor, uuid)
       end)
 
     {:noreply, socket}
@@ -64,7 +64,7 @@ defmodule LiveDendronWeb.HomeLive do
   def handle_event("update_node_name", %{"uuid" => uuid, "node" => node_params}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
-        Tree.update_node_name(team_editor, uuid, node_params)
+        TreeEditor.update_node_name(team_editor, uuid, node_params)
       end)
 
     {:noreply, socket}

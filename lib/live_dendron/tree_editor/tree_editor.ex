@@ -1,4 +1,4 @@
-defmodule LiveDendron.Tree do
+defmodule LiveDendron.TreeEditor do
   alias LiveDendron.TeamEditor
   alias LiveDendron.TreeEditor
 
