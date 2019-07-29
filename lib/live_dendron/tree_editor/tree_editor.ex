@@ -1,4 +1,5 @@
 defmodule LiveDendron.TreeEditor do
+  alias LiveDendron.Core
   alias LiveDendron.TeamEditor
   alias LiveDendron.TreeEditor
 
@@ -59,7 +60,19 @@ defmodule LiveDendron.TreeEditor do
   @doc false
   def update_node_name(%TeamEditor{} = editor, uuid, params) do
     tree_editor = do_update_node_name(editor.tree_editor, uuid, params)
-    %{editor | tree_editor: tree_editor}
+    editor = %{editor | tree_editor: tree_editor}
+
+    if being_edited?(tree_editor) do
+      :error
+    else
+      data =
+        tree_editor
+        |> TreeEditor.Root.unequip()
+        |> :erlang.term_to_binary()
+
+      {:ok, team} = Core.update_team_organization_tree(editor.team, data)
+      {:ok, editor, team}
+    end
   end
 
   defp do_update_node_name(%TreeEditor.Root{} = root, uuid, params) do
@@ -70,7 +83,7 @@ defmodule LiveDendron.TreeEditor do
 
   @name_holder_modules [TreeEditor.Group, TreeEditor.Member]
   defp do_update_node_name(%mod{uuid: u} = group, uuid, params)
-      when u == uuid and mod in @name_holder_modules do
+       when u == uuid and mod in @name_holder_modules do
     cs = TreeEditor.NameHolder.changeset(group.changeset, params)
 
     if cs.valid? do
@@ -90,4 +103,16 @@ defmodule LiveDendron.TreeEditor do
   defp do_update_node_name(%TreeEditor.Member{} = member, _uuid, _params) do
     %{member | changeset: nil}
   end
+
+  defp being_edited?(%TreeEditor.Root{} = root) do
+    Enum.all?(root.groups ++ root.members, fn node -> being_edited?(node) end)
+  end
+
+  defp being_edited?(%TreeEditor.Group{changeset: nil} = group) do
+    Enum.all?(group.subgroups ++ group.members, fn node -> being_edited?(node) end)
+  end
+
+  defp being_edited?(%TreeEditor.Group{} = _group), do: true
+  defp being_edited?(%TreeEditor.Member{changeset: nil} = _member), do: false
+  defp being_edited?(%TreeEditor.Member{} = _member), do: true
 end

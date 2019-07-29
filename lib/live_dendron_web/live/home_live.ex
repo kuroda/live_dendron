@@ -63,27 +63,38 @@ defmodule LiveDendronWeb.HomeLive do
 
   def handle_event("update_node_name", %{"uuid" => uuid, "node" => node_params}, socket) do
     socket =
-      update(socket, :team_editor, fn team_editor ->
-        TreeEditor.update_node_name(team_editor, uuid, node_params)
-      end)
+      case TreeEditor.update_node_name(socket.assigns.team_editor, uuid, node_params) do
+        {:ok, editor, team} -> replace_team(socket, editor, team)
+        :error -> socket
+      end
 
     {:noreply, socket}
   end
 
-  defp replace_team(socket, %Core.Team{} = struct) do
-    teams =
-      socket.assigns.teams
-      |> Enum.map(fn t -> if t.id == struct.id, do: struct, else: t end)
-      |> Enum.sort(fn a, b -> a.name <= b.name end)
-
+  defp replace_team(socket, %TeamEditor{} = editor, %Core.Team{} = team) do
     socket
-    |> assign(:teams, teams)
-    |> assign(:team_editor, TeamEditor.construct(struct))
+    |> refresh_teams(team)
+    |> assign(:team_editor, editor)
+  end
+
+  defp replace_team(socket, %Core.Team{} = team) do
+    socket
+    |> refresh_teams(team)
+    |> assign(:team_editor, TeamEditor.construct(team))
   end
 
   defp replace_team(socket, %Ecto.Changeset{} = changeset) do
     update(socket, :team_editor, fn team_editor ->
       %{team_editor | changeset: changeset}
     end)
+  end
+
+  defp refresh_teams(socket, team) do
+    teams =
+      socket.assigns.teams
+      |> Enum.map(fn t -> if t.id == team.id, do: team, else: t end)
+      |> Enum.sort(fn a, b -> a.name <= b.name end)
+
+    assign(socket, :teams, teams)
   end
 end

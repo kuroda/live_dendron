@@ -20,4 +20,11 @@ defmodule LiveDendron.Core do
     |> Core.Team.changeset(%{"name" => name})
     |> Repo.update()
   end
+
+  @doc false
+  def update_team_organization_tree(team, data) do
+    team
+    |> Core.Team.changeset(%{"organization_tree" => data})
+    |> Repo.update()
+  end
 end
