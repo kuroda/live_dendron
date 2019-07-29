@@ -4,6 +4,7 @@ defmodule LiveDendron.TreeEditor.Group do
 
   defstruct name: "", subgroups: [], members: [], expanded: false, changeset: nil, uuid: nil
 
+  @doc false
   def equip(%Tree.Group{} = group) do
     %__MODULE__{
       name: group.name,
@@ -13,6 +14,7 @@ defmodule LiveDendron.TreeEditor.Group do
     }
   end
 
+  @doc false
   def unequip(%__MODULE__{} = group) do
     %Tree.Group{
       name: group.name,

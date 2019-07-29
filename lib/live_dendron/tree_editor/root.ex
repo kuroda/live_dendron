@@ -4,6 +4,7 @@ defmodule LiveDendron.TreeEditor.Root do
 
   defstruct groups: [], members: [], expanded: true, changeset: nil, uuid: nil
 
+  @doc false
   def equip(%Tree.Root{} = root) do
     %__MODULE__{
       groups: Enum.map(root.groups, fn g -> TreeEditor.Group.equip(g) end),
@@ -12,6 +13,7 @@ defmodule LiveDendron.TreeEditor.Root do
     }
   end
 
+  @doc false
   def unequip(%__MODULE__{} = root) do
     %Tree.Root{
       groups: Enum.map(root.groups, fn g -> TreeEditor.Group.unequip(g) end),

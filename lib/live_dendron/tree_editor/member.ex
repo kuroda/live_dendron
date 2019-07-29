@@ -3,6 +3,7 @@ defmodule LiveDendron.TreeEditor.Member do
 
   defstruct name: "", changeset: nil, uuid: nil
 
+  @doc false
   def equip(%Tree.Member{} = member) do
     %__MODULE__{
       name: member.name,
@@ -10,6 +11,7 @@ defmodule LiveDendron.TreeEditor.Member do
     }
   end
 
+  @doc false
   def unequip(%__MODULE__{} = member) do
     %Tree.Member{
       name: member.name
