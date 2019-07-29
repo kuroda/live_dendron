@@ -60,3 +60,13 @@ form.name-editor input[type="text"] {
   width: auto;
   margin: 0;
 }
+
+button[type="button"].cancel {
+  background-color: #fff;
+  border-color: #444;
+  color: black;
+}
+
+button[type="button"].cancel:hover {
+  background-color: #ccc;
+}
