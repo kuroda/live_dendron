@@ -117,8 +117,20 @@ defmodule LiveDendron.TreeEditor do
   defp being_edited?(%TreeEditor.Member{} = _member), do: true
 
   @doc false
-  def add_member(%TeamEditor{} = editor, _uuid) do
-    editor
+  def add_member(%TeamEditor{} = editor, uuid) do
+    tree_editor = do_add_member(editor.tree_editor, uuid)
+    %{editor | tree_editor: tree_editor}
+  end
+
+  @grouping_modules [TreeEditor.Root, TreeEditor.Group]
+  defp do_add_member(%mod{uuid: u} = root, uuid) when u == uuid and mod in @grouping_modules do
+    new_member = TreeEditor.Member.build()
+    %{root | members: root.members ++ [new_member]}
+  end
+
+  defp do_add_member(%mod{} = root, uuid) when mod in @grouping_modules do
+    groups = Enum.map(root.groups, fn g -> do_add_member(g, uuid) end)
+    %{root | groups: groups}
   end
 
   @doc false
