@@ -8,13 +8,13 @@ defmodule LiveDendronWeb.HomeLiveView do
   def render_node(node) do
     cond do
       node.changeset ->
-        render "name_editor.html", changeset: node.changeset, uuid: node.uuid
+        render("name_editor.html", changeset: node.changeset, uuid: node.uuid)
 
       node.in_trash ->
-        render "node_in_trash.html", node: node
+        render("node_in_trash.html", node: node)
 
       true ->
-        render "normal_node.html", node: node
+        render("normal_node.html", node: node)
     end
   end
 end

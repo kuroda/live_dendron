@@ -4,7 +4,7 @@
   </span>
   <%= render_node(@group) %>
   <%= if @group.expanded do %>
-    <%= if is_nil(@group.changeset) do %>
+    <%= if is_nil(@group.changeset) and not @group.in_trash do %>
       <span class="command-button" phx-click="add_member" phx-value="<%= @group.uuid %>">
         <%= fa_icon("user-plus") %>
       </span>

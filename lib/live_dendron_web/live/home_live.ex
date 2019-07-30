@@ -70,6 +70,15 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_event("destroy_node", uuid, socket) do
+    socket =
+      update(socket, :team_editor, fn team_editor ->
+        TreeEditor.destroy_node(team_editor, uuid)
+      end)
+
+    {:noreply, socket}
+  end
+
   def handle_event("add_member", uuid, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
