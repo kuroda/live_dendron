@@ -64,22 +64,22 @@ defmodule LiveDendronWeb.HomeLive do
   def handle_event("update_node_name", %{"uuid" => uuid, "node" => node_params}, socket) do
     socket =
       case TreeEditor.update_node_name(socket.assigns.team_editor, uuid, node_params) do
-        {:ok, editor, team} -> replace_team(socket, editor, team)
+        {:ok, editor} -> replace_team(socket, editor)
         :error -> socket
       end
 
     {:noreply, socket}
   end
 
-  defp replace_team(socket, %TeamEditor{} = editor, %Core.Team{} = team) do
+  defp replace_team(socket, %TeamEditor{} = editor) do
     socket
-    |> refresh_teams(team)
+    |> refresh_teams()
     |> assign(:team_editor, editor)
   end
 
   defp replace_team(socket, %Core.Team{} = team) do
     socket
-    |> refresh_teams(team)
+    |> refresh_teams()
     |> assign(:team_editor, TeamEditor.construct(team))
   end
 
@@ -89,12 +89,7 @@ defmodule LiveDendronWeb.HomeLive do
     end)
   end
 
-  defp refresh_teams(socket, team) do
-    teams =
-      socket.assigns.teams
-      |> Enum.map(fn t -> if t.id == team.id, do: team, else: t end)
-      |> Enum.sort(fn a, b -> a.name <= b.name end)
-
-    assign(socket, :teams, teams)
+  defp refresh_teams(socket) do
+    assign(socket, :teams, Core.list_teams())
   end
 end

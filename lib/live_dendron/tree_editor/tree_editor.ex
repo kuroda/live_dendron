@@ -70,8 +70,8 @@ defmodule LiveDendron.TreeEditor do
         |> TreeEditor.Root.unequip()
         |> :erlang.term_to_binary()
 
-      {:ok, team} = Core.update_team_organization_tree(editor.team, data)
-      {:ok, editor, team}
+      {:ok, _team} = Core.update_team_organization_tree(editor.team, data)
+      {:ok, editor}
     end
   end
 
