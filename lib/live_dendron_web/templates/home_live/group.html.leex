@@ -9,6 +9,9 @@
     <span class="command-button" phx-click="edit_node" phx-value="<%= @group.uuid %>">
       <%= fa_icon("edit") %>
     </span>
+    <span class="command-button" phx-click="toggle_node_in_trash" phx-value="<%= @group.uuid %>">
+      <%= fa_icon("trash-alt") %>
+    </span>
   <% end %>
   <%= if @group.expanded do %>
     <%= if is_nil(@group.changeset) do %>

@@ -158,4 +158,9 @@ defmodule LiveDendron.TreeEditor do
     subgroups = Enum.map(group.subgroups, fn g -> do_add_group(g, uuid) end)
     %{group | subgroups: subgroups}
   end
+
+  @doc false
+  def toggle_node_in_trash(%TeamEditor{} = editor, _uuid) do
+    editor
+  end
 end

@@ -61,6 +61,15 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_event("toggle_node_in_trash", uuid, socket) do
+    socket =
+      update(socket, :team_editor, fn team_editor ->
+        TreeEditor.toggle_node_in_trash(team_editor, uuid)
+      end)
+
+    {:noreply, socket}
+  end
+
   def handle_event("add_member", uuid, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
