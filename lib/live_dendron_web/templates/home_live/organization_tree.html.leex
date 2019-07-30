@@ -4,6 +4,12 @@
   <span class="toggler" phx-click="toggle_group_expanded" phx-value="<%= @root.uuid %>">
     <%= if @root.expanded, do: fa_icon("angle-down"), else: fa_icon("angle-right") %>
   </span>
+  <span class="command-button" phx-click="add_member" phx-value="<%= @root.uuid %>">
+    <%= fa_icon("user-plus") %>
+  </span>
+  <span class="command-button" phx-click="add_group" phx-value="<%= @root.uuid %>">
+    <%= fa_icon("folder-plus") %>
+  </span>
   <%= if @root.expanded do %>
     <%= for group <- @root.groups do %>
       <%= render "group.html", group: group %>
