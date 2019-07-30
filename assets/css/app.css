@@ -70,3 +70,7 @@ button[type="button"].cancel {
 button[type="button"].cancel:hover {
   background-color: #ccc;
 }
+
+del {
+  color: #888;
+}

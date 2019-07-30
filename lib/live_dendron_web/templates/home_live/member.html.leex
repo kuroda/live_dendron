@@ -1,10 +1,4 @@
 <div class="tree-node">
   <span class="square">&nbsp;</span>
-  <%=
-    if @member.changeset do
-      render "name_editor.html", changeset: @member.changeset, uuid: @member.uuid
-    else
-      render "normal_node.html", node: @member
-    end
-  %>
+  <%= render_node(@member) %>
 </div>

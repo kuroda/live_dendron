@@ -160,7 +160,30 @@ defmodule LiveDendron.TreeEditor do
   end
 
   @doc false
-  def toggle_node_in_trash(%TeamEditor{} = editor, _uuid) do
-    editor
+  def toggle_node_in_trash(%TeamEditor{} = editor, uuid) do
+    tree_editor = do_toggle_node_in_trash(editor.tree_editor, uuid)
+    %{editor | tree_editor: tree_editor}
   end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Root{} = root, uuid) do
+    groups = Enum.map(root.groups, fn g -> do_toggle_node_in_trash(g, uuid) end)
+    members = Enum.map(root.members, fn m -> do_toggle_node_in_trash(m, uuid) end)
+    %{root | groups: groups, members: members}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Group{uuid: u} = group, uuid) when u == uuid do
+    %{group | in_trash: not group.in_trash}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Group{} = group, uuid) do
+    subgroups = Enum.map(group.subgroups, fn g -> do_toggle_node_in_trash(g, uuid) end)
+    members = Enum.map(group.members, fn m -> do_toggle_node_in_trash(m, uuid) end)
+    %{group | subgroups: subgroups, members: members, changeset: nil}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Member{uuid: u} = member, uuid) when u == uuid do
+    %{member | in_trash: not member.in_trash}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Member{} = member, _uuid), do: member
 end

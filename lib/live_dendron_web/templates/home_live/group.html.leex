@@ -2,13 +2,7 @@
   <span class="toggler" phx-click="toggle_group_expanded" phx-value="<%= @group.uuid %>">
     <%= if @group.expanded, do: fa_icon("angle-down"), else: fa_icon("angle-right") %>
   </span>
-  <%=
-    if @group.changeset do
-      render "name_editor.html", changeset: @group.changeset, uuid: @group.uuid
-    else
-      render "normal_node.html", node: @group
-    end
-  %>
+  <%= render_node(@group) %>
   <%= if @group.expanded do %>
     <%= if is_nil(@group.changeset) do %>
       <span class="command-button" phx-click="add_member" phx-value="<%= @group.uuid %>">
