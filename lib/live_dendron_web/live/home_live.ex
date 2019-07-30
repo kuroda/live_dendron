@@ -36,8 +36,8 @@ defmodule LiveDendronWeb.HomeLive do
   def handle_event("update_team_name", %{"team" => team_params} = _params, socket) do
     socket =
       case TeamEditor.update_team_name(socket.assigns.team_editor, team_params) do
-        {:ok, struct} -> replace_team(socket, struct)
-        {:error, changeset} -> replace_team(socket, changeset)
+        {:ok, struct} -> refresh_state(socket, struct)
+        {:error, changeset} -> refresh_state(socket, changeset)
       end
 
     {:noreply, socket}
@@ -64,32 +64,28 @@ defmodule LiveDendronWeb.HomeLive do
   def handle_event("update_node_name", %{"uuid" => uuid, "node" => node_params}, socket) do
     socket =
       case TreeEditor.update_node_name(socket.assigns.team_editor, uuid, node_params) do
-        {:ok, editor} -> replace_team(socket, editor)
+        {:ok, editor} -> refresh_state(socket, editor)
         :error -> socket
       end
 
     {:noreply, socket}
   end
 
-  defp replace_team(socket, %TeamEditor{} = editor) do
+  defp refresh_state(socket, %TeamEditor{} = editor) do
     socket
-    |> refresh_teams()
+    |> assign(:teams, Core.list_teams())
     |> assign(:team_editor, editor)
   end
 
-  defp replace_team(socket, %Core.Team{} = team) do
+  defp refresh_state(socket, %Core.Team{} = team) do
     socket
-    |> refresh_teams()
+    |> assign(:teams, Core.list_teams())
     |> assign(:team_editor, TeamEditor.construct(team))
   end
 
-  defp replace_team(socket, %Ecto.Changeset{} = changeset) do
+  defp refresh_state(socket, %Ecto.Changeset{} = changeset) do
     update(socket, :team_editor, fn team_editor ->
       %{team_editor | changeset: changeset}
     end)
-  end
-
-  defp refresh_teams(socket) do
-    assign(socket, :teams, Core.list_teams())
   end
 end
