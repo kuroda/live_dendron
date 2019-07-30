@@ -67,6 +67,16 @@ button[type="button"].cancel {
   color: black;
 }
 
+button[type="button"].danger {
+  background-color: #c44;
+  border-color: #f44;
+  color: white;
+}
+
 button[type="button"].cancel:hover {
   background-color: #ccc;
+}
+
+del {
+  color: #888;
 }

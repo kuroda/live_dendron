@@ -2,6 +2,7 @@ defmodule LiveDendron.TreeEditor do
   alias LiveDendron.Core
   alias LiveDendron.TeamEditor
   alias LiveDendron.TreeEditor
+  require Logger
 
   @doc false
   def toggle_group_expanded(%TeamEditor{} = editor, uuid) do
@@ -157,5 +158,59 @@ defmodule LiveDendron.TreeEditor do
   defp do_add_group(%TreeEditor.Group{} = group, uuid) do
     subgroups = Enum.map(group.subgroups, fn g -> do_add_group(g, uuid) end)
     %{group | subgroups: subgroups}
+  end
+
+  @doc false
+  def toggle_node_in_trash(%TeamEditor{} = editor, uuid) do
+    tree_editor = do_toggle_node_in_trash(editor.tree_editor, uuid)
+    %{editor | tree_editor: tree_editor}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Root{} = root, uuid) do
+    groups = Enum.map(root.groups, fn g -> do_toggle_node_in_trash(g, uuid) end)
+    members = Enum.map(root.members, fn m -> do_toggle_node_in_trash(m, uuid) end)
+    %{root | groups: groups, members: members}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Group{uuid: u} = group, uuid) when u == uuid do
+    %{group | in_trash: not group.in_trash}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Group{} = group, uuid) do
+    subgroups = Enum.map(group.subgroups, fn g -> do_toggle_node_in_trash(g, uuid) end)
+    members = Enum.map(group.members, fn m -> do_toggle_node_in_trash(m, uuid) end)
+    %{group | subgroups: subgroups, members: members, changeset: nil}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Member{uuid: u} = member, uuid) when u == uuid do
+    %{member | in_trash: not member.in_trash}
+  end
+
+  defp do_toggle_node_in_trash(%TreeEditor.Member{} = member, _uuid), do: member
+
+  @doc false
+  def destroy_node(%TeamEditor{} = editor, uuid) do
+    tree_editor = do_destroy_node(editor.tree_editor, uuid)
+    %{editor | tree_editor: tree_editor}
+  end
+
+  defp do_destroy_node(%TreeEditor.Root{} = root, uuid) do
+    groups =
+      root.groups
+      |> Enum.reject(fn g -> g.uuid == uuid end)
+      |> Enum.map(fn g -> do_destroy_node(g, uuid) end)
+
+    members = Enum.reject(root.members, fn m -> m.uuid == uuid end)
+    %{root | groups: groups, members: members}
+  end
+
+  defp do_destroy_node(%TreeEditor.Group{} = group, uuid) do
+    subgroups =
+      group.subgroups
+      |> Enum.reject(fn g -> g.uuid == uuid end)
+      |> Enum.map(fn g -> do_destroy_node(g, uuid) end)
+
+    members = Enum.reject(group.members, fn m -> m.uuid == uuid end)
+    %{group | subgroups: subgroups, members: members}
   end
 end

@@ -2,7 +2,14 @@ defmodule LiveDendron.TreeEditor.Group do
   alias LiveDendron.Tree
   alias LiveDendron.TreeEditor
 
-  defstruct name: "", subgroups: [], members: [], expanded: false, changeset: nil, uuid: nil
+  defstruct name: "",
+            subgroups: [],
+            members: [],
+            expanded: false,
+            in_trash: false,
+            getting_destroyed: false,
+            changeset: nil,
+            uuid: nil
 
   @doc false
   def equip(%Tree.Group{} = group) do

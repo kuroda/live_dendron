@@ -2,7 +2,7 @@ defmodule LiveDendron.TreeEditor.Member do
   alias LiveDendron.Tree
   alias LiveDendron.TreeEditor
 
-  defstruct name: "", changeset: nil, uuid: nil
+  defstruct name: "", in_trash: false, getting_destroyed: false, changeset: nil, uuid: nil
 
   @doc false
   def equip(%Tree.Member{} = member) do
