@@ -1,4 +1,8 @@
 <div class="tree-node">
   <span class="square">&nbsp;</span>
-  <%= render_node(@member) %>
+  <%= if @member.getting_destroyed do %>
+    <del><%= @member.name %></del>
+  <% else %>
+    <%= render_node(@member) %>
+  <% end %>
 </div>

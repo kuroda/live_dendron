@@ -7,6 +7,7 @@ defmodule LiveDendron.TreeEditor.Group do
             members: [],
             expanded: false,
             in_trash: false,
+            getting_destroyed: false,
             changeset: nil,
             uuid: nil
 

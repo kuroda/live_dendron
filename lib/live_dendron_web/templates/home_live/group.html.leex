@@ -2,9 +2,14 @@
   <span class="toggler" phx-click="toggle_group_expanded" phx-value="<%= @group.uuid %>">
     <%= if @group.expanded, do: fa_icon("angle-down"), else: fa_icon("angle-right") %>
   </span>
-  <%= render_node(@group) %>
+  <%= if @group.getting_destroyed do %>
+    <del><%= @group.name %></del>
+  <% else %>
+    <%= render_node(@group) %>
+  <% end %>
   <%= if @group.expanded do %>
-    <%= if is_nil(@group.changeset) and not @group.in_trash do %>
+    <% getting_destroyed = @group.in_trash or @group.getting_destroyed %>
+    <%= if is_nil(@group.changeset) and not getting_destroyed do %>
       <span class="command-button" phx-click="add_member" phx-value="<%= @group.uuid %>">
         <%= fa_icon("user-plus") %>
       </span>
@@ -13,10 +18,10 @@
       </span>
     <% end %>
     <%= for group <- @group.subgroups do %>
-      <%= render "group.html", group: group %>
+      <%= render "group.html", group: %{group | getting_destroyed: getting_destroyed} %>
     <% end %>
     <%= for member <- @group.members do %>
-      <%= render "member.html", member: member %>
+      <%= render "member.html", member: %{member | getting_destroyed: getting_destroyed} %>
     <% end %>
   <% end %>
 </div>
