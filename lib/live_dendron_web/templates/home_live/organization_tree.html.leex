@@ -5,6 +5,12 @@
     <%= if @root.expanded, do: fa_icon("angle-down"), else: fa_icon("angle-right") %>
   </span>
   <%= if @root.expanded do %>
+    <span class="command-button" phx-click="add_member" phx-value="<%= @root.uuid %>">
+      <%= fa_icon("user-plus") %>
+    </span>
+    <span class="command-button" phx-click="add_group" phx-value="<%= @root.uuid %>">
+      <%= fa_icon("folder-plus") %>
+    </span>
     <%= for group <- @root.groups do %>
       <%= render "group.html", group: group %>
     <% end %>

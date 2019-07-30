@@ -1,5 +1,6 @@
 defmodule LiveDendron.TreeEditor.Member do
   alias LiveDendron.Tree
+  alias LiveDendron.TreeEditor
 
   defstruct name: "", changeset: nil, uuid: nil
 
@@ -15,6 +16,14 @@ defmodule LiveDendron.TreeEditor.Member do
   def unequip(%__MODULE__{} = member) do
     %Tree.Member{
       name: member.name
+    }
+  end
+
+  @doc false
+  def build() do
+    %__MODULE__{
+      changeset: TreeEditor.NameHolder.build("New member"),
+      uuid: Ecto.UUID.generate()
     }
   end
 end

@@ -70,8 +70,8 @@ defmodule LiveDendron.TreeEditor do
         |> TreeEditor.Root.unequip()
         |> :erlang.term_to_binary()
 
-      {:ok, team} = Core.update_team_organization_tree(editor.team, data)
-      {:ok, editor, team}
+      {:ok, _team} = Core.update_team_organization_tree(editor.team, data)
+      {:ok, editor}
     end
   end
 
@@ -115,4 +115,47 @@ defmodule LiveDendron.TreeEditor do
   defp being_edited?(%TreeEditor.Group{} = _group), do: true
   defp being_edited?(%TreeEditor.Member{changeset: nil} = _member), do: false
   defp being_edited?(%TreeEditor.Member{} = _member), do: true
+
+  @doc false
+  def add_member(%TeamEditor{} = editor, uuid) do
+    tree_editor = do_add_member(editor.tree_editor, uuid)
+    %{editor | tree_editor: tree_editor}
+  end
+
+  @grouping_modules [TreeEditor.Root, TreeEditor.Group]
+  defp do_add_member(%mod{uuid: u} = root, uuid) when u == uuid and mod in @grouping_modules do
+    new_member = TreeEditor.Member.build()
+    %{root | members: root.members ++ [new_member]}
+  end
+
+  defp do_add_member(%mod{} = root, uuid) when mod in @grouping_modules do
+    groups = Enum.map(root.groups, fn g -> do_add_member(g, uuid) end)
+    %{root | groups: groups}
+  end
+
+  @doc false
+  def add_group(%TeamEditor{} = editor, uuid) do
+    tree_editor = do_add_group(editor.tree_editor, uuid)
+    %{editor | tree_editor: tree_editor}
+  end
+
+  defp do_add_group(%TreeEditor.Root{uuid: u} = root, uuid) when u == uuid do
+    new_group = TreeEditor.Group.build()
+    %{root | groups: root.groups ++ [new_group]}
+  end
+
+  defp do_add_group(%TreeEditor.Root{} = root, uuid) do
+    groups = Enum.map(root.groups, fn g -> do_add_group(g, uuid) end)
+    %{root | groups: groups}
+  end
+
+  defp do_add_group(%TreeEditor.Group{uuid: u} = group, uuid) when u == uuid do
+    new_subgroup = TreeEditor.Group.build()
+    %{group | subgroups: group.subgroups ++ [new_subgroup]}
+  end
+
+  defp do_add_group(%TreeEditor.Group{} = group, uuid) do
+    subgroups = Enum.map(group.subgroups, fn g -> do_add_group(g, uuid) end)
+    %{group | subgroups: subgroups}
+  end
 end

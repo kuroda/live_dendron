@@ -16,6 +16,10 @@ defmodule LiveDendron.TreeEditor.NameHolder do
   end
 
   @doc false
+  def build(name) when is_binary(name) do
+    cast(%__MODULE__{name: name}, %{}, [])
+  end
+
   def build(struct) do
     cast(%__MODULE__{name: struct.name}, %{}, [])
   end

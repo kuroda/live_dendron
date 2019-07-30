@@ -11,6 +11,14 @@
     </span>
   <% end %>
   <%= if @group.expanded do %>
+    <%= if is_nil(@group.changeset) do %>
+      <span class="command-button" phx-click="add_member" phx-value="<%= @group.uuid %>">
+        <%= fa_icon("user-plus") %>
+      </span>
+      <span class="command-button" phx-click="add_group" phx-value="<%= @group.uuid %>">
+        <%= fa_icon("folder-plus") %>
+      </span>
+    <% end %>
     <%= for group <- @group.subgroups do %>
       <%= render "group.html", group: group %>
     <% end %>
