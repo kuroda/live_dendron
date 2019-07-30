@@ -115,4 +115,14 @@ defmodule LiveDendron.TreeEditor do
   defp being_edited?(%TreeEditor.Group{} = _group), do: true
   defp being_edited?(%TreeEditor.Member{changeset: nil} = _member), do: false
   defp being_edited?(%TreeEditor.Member{} = _member), do: true
+
+  @doc false
+  def add_member(%TeamEditor{} = editor, _uuid) do
+    editor
+  end
+
+  @doc false
+  def add_group(%TeamEditor{} = editor, _uuid) do
+    editor
+  end
 end

@@ -61,6 +61,24 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
+  def handle_event("add_member", uuid, socket) do
+    socket =
+      update(socket, :team_editor, fn team_editor ->
+        TreeEditor.add_member(team_editor, uuid)
+      end)
+
+    {:noreply, socket}
+  end
+
+  def handle_event("add_group", uuid, socket) do
+    socket =
+      update(socket, :team_editor, fn team_editor ->
+        TreeEditor.add_group(team_editor, uuid)
+      end)
+
+    {:noreply, socket}
+  end
+
   def handle_event("update_node_name", %{"uuid" => uuid, "node" => node_params}, socket) do
     socket =
       case TreeEditor.update_node_name(socket.assigns.team_editor, uuid, node_params) do
