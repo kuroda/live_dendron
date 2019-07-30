@@ -22,4 +22,12 @@ defmodule LiveDendron.TreeEditor.Group do
       members: Enum.map(group.members, fn m -> TreeEditor.Member.unequip(m) end)
     }
   end
+
+  @doc false
+  def build() do
+    %__MODULE__{
+      changeset: TreeEditor.NameHolder.build("New group"),
+      uuid: Ecto.UUID.generate()
+    }
+  end
 end

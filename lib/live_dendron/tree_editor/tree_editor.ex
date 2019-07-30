@@ -134,7 +134,28 @@ defmodule LiveDendron.TreeEditor do
   end
 
   @doc false
-  def add_group(%TeamEditor{} = editor, _uuid) do
-    editor
+  def add_group(%TeamEditor{} = editor, uuid) do
+    tree_editor = do_add_group(editor.tree_editor, uuid)
+    %{editor | tree_editor: tree_editor}
+  end
+
+  defp do_add_group(%TreeEditor.Root{uuid: u} = root, uuid) when u == uuid do
+    new_group = TreeEditor.Group.build()
+    %{root | groups: root.groups ++ [new_group]}
+  end
+
+  defp do_add_group(%TreeEditor.Root{} = root, uuid) do
+    groups = Enum.map(root.groups, fn g -> do_add_group(g, uuid) end)
+    %{root | groups: groups}
+  end
+
+  defp do_add_group(%TreeEditor.Group{uuid: u} = group, uuid) when u == uuid do
+    new_subgroup = TreeEditor.Group.build()
+    %{group | subgroups: group.subgroups ++ [new_subgroup]}
+  end
+
+  defp do_add_group(%TreeEditor.Group{} = group, uuid) do
+    subgroups = Enum.map(group.subgroups, fn g -> do_add_group(g, uuid) end)
+    %{group | subgroups: subgroups}
   end
 end
