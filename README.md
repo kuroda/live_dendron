@@ -1,5 +1,7 @@
 # Live Dendron - a Phoenix LiveView demo
 
+![Screenshot](https://storage.cloud.google.com/live_dendron/live-dendron-screenshot.png)
+
 ## Requirements
 
 * Docker 18 or above
