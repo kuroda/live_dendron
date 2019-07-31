@@ -1,5 +1,7 @@
 # Live Dendron - a Phoenix LiveView demo
 
+![Screenshot](https://github.com/kuroda/live_dendron/blob/media/screenshot.png)
+
 ## Requirements
 
 * Docker 18 or above
