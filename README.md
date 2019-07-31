@@ -1,6 +1,6 @@
 # Live Dendron - a Phoenix LiveView demo
 
-![Screenshot](https://storage.cloud.google.com/live_dendron/live-dendron-screenshot.png)
+![Screenshot](https://github.com/kuroda/live_dendron/blob/media/screenshot.png)
 
 ## Requirements
 
