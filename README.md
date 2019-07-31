@@ -2,6 +2,15 @@
 
 ![Screenshot](https://github.com/kuroda/live_dendron/blob/media/screenshot.png)
 
+On this demo, you can manipulate an organization chart that has groups and members as nodes.
+
+Specifically, you can
+
+* expand or shrink a group node
+* edit the name of a group or a member
+* add a new group or member
+* delete a new group or member
+
 ## Requirements
 
 * Docker 18 or above
