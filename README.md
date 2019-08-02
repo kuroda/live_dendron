@@ -31,3 +31,9 @@ $ docker-compose up
 ```
 
 You can play with this demo by opening http://localhost:4000 with you browser.
+
+## Running tests
+
+```
+$ ./mix.sh test
+```
