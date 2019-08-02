@@ -129,9 +129,14 @@ defmodule LiveDendron.TreeEditor do
     %{root | members: root.members ++ [new_member]}
   end
 
-  defp do_add_member(%mod{} = root, uuid) when mod in @grouping_modules do
+  defp do_add_member(%TreeEditor.Root{} = root, uuid) do
     groups = Enum.map(root.groups, fn g -> do_add_member(g, uuid) end)
     %{root | groups: groups}
+  end
+
+  defp do_add_member(%TreeEditor.Group{} = group, uuid) do
+    subgroups = Enum.map(group.subgroups, fn g -> do_add_member(g, uuid) end)
+    %{group | subgroups: subgroups}
   end
 
   @doc false
