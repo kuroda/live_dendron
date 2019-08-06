@@ -41,7 +41,10 @@ defmodule LiveDendron.TreeEditor do
   end
 
   defp do_edit_node(%TreeEditor.Group{uuid: u} = group, uuid) when u == uuid do
-    %{group | changeset: TreeEditor.NameHolder.build(group)}
+    subgroups = Enum.map(group.subgroups, fn g -> do_edit_node(g, uuid) end)
+    members = Enum.map(group.members, fn m -> do_edit_node(m, uuid) end)
+    changeset = TreeEditor.NameHolder.build(group)
+    %{group | subgroups: subgroups, members: members, changeset: changeset}
   end
 
   defp do_edit_node(%TreeEditor.Group{} = group, uuid) do
