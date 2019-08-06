@@ -80,4 +80,30 @@ defmodule LiveDendron.TreeEditor.TreeEditorTest do
       assert length(subgroup.members) == 3
     end
   end
+
+  describe "edit_node/2" do
+    test "a newly created member with empty name should be deleted" do
+      team = create_team()
+      editor = TeamEditor.construct(team)
+      group = editor.tree_editor.groups |> find_by_name("Tech")
+      editor = TreeEditor.add_member(editor, group.uuid)
+
+      editor = TreeEditor.edit_node(editor, "")
+
+      group = editor.tree_editor.groups |> find_by_name("Tech")
+      assert length(group.members) == 1
+    end
+
+    test "a newly created group with empty name should be deleted" do
+      team = create_team()
+      editor = TeamEditor.construct(team)
+      group = editor.tree_editor.groups |> find_by_name("Tech")
+      editor = TreeEditor.add_group(editor, group.uuid)
+
+      editor = TreeEditor.edit_node(editor, "")
+
+      group = editor.tree_editor.groups |> find_by_name("Tech")
+      assert length(group.subgroups) == 0
+    end
+  end
 end

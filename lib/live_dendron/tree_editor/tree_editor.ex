@@ -34,10 +34,30 @@ defmodule LiveDendron.TreeEditor do
     %{editor | tree_editor: tree_editor}
   end
 
+  defp do_edit_node(%TreeEditor.Root{} = root, "") do
+    groups =
+      root.groups
+      |> Enum.reject(fn g -> g.name == "" end)
+      |> Enum.map(fn g -> do_edit_node(g, "") end)
+
+    members = Enum.reject(root.members, fn m -> m.name == "" end)
+    %{root | groups: groups, members: members}
+  end
+
   defp do_edit_node(%TreeEditor.Root{} = root, uuid) do
     groups = Enum.map(root.groups, fn g -> do_edit_node(g, uuid) end)
     members = Enum.map(root.members, fn m -> do_edit_node(m, uuid) end)
     %{root | groups: groups, members: members}
+  end
+
+  defp do_edit_node(%TreeEditor.Group{} = group, "") do
+    subgroups =
+      group.subgroups
+      |> Enum.reject(fn g -> g.name == "" end)
+      |> Enum.map(fn g -> do_edit_node(g, "") end)
+
+    members = Enum.reject(group.members, fn m -> m.name == "" end)
+    %{group | subgroups: subgroups, members: members}
   end
 
   defp do_edit_node(%TreeEditor.Group{uuid: u} = group, uuid) when u == uuid do
