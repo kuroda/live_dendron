@@ -8,5 +8,5 @@ command4="npm i --prefix=assets"
 
 docker-compose stop app
 docker-compose up -d db
-sleep 2
+sleep 10
 docker-compose run --rm app /bin/sh -c "$command1; $command2; $command3; $command4"
