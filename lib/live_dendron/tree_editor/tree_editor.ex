@@ -2,7 +2,6 @@ defmodule LiveDendron.TreeEditor do
   alias LiveDendron.Core
   alias LiveDendron.TeamEditor
   alias LiveDendron.TreeEditor
-  require Logger
 
   @doc false
   def toggle_group_expanded(%TeamEditor{} = editor, uuid) do
@@ -40,7 +39,11 @@ defmodule LiveDendron.TreeEditor do
       |> Enum.reject(fn g -> g.name == "" end)
       |> Enum.map(fn g -> do_edit_node(g, "") end)
 
-    members = Enum.reject(root.members, fn m -> m.name == "" end)
+    members =
+      root.members
+      |> Enum.reject(fn m -> m.name == "" end)
+      |> Enum.map(fn m -> do_edit_node(m, "") end)
+
     %{root | groups: groups, members: members}
   end
 
@@ -56,8 +59,12 @@ defmodule LiveDendron.TreeEditor do
       |> Enum.reject(fn g -> g.name == "" end)
       |> Enum.map(fn g -> do_edit_node(g, "") end)
 
-    members = Enum.reject(group.members, fn m -> m.name == "" end)
-    %{group | subgroups: subgroups, members: members}
+    members =
+      group.members
+      |> Enum.reject(fn m -> m.name == "" end)
+      |> Enum.map(fn m -> do_edit_node(m, "") end)
+
+    %{group | subgroups: subgroups, members: members, changeset: nil}
   end
 
   defp do_edit_node(%TreeEditor.Group{uuid: u} = group, uuid) when u == uuid do
