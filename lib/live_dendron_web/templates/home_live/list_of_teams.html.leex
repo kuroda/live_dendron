@@ -8,7 +8,7 @@
           if @team_editor && team.id == @team_editor.team.id,
             do: "current_team", else: ""
       %>
-      <a phx-click="select_team" phx-value="<%= team.id %>" class="<%= class %>">
+      <a phx-click="select_team" phx-value-team-id="<%= team.id %>" class="<%= class %>">
         <%= team.name %>
       </a>
     </li>

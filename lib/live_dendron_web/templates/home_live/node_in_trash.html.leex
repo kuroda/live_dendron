@@ -1,7 +1,7 @@
 <del><%= @node.name %></del>
-<button type="button" phx-click="destroy_node" phx-value="<%= @node.uuid %>" class="danger">
+<button type="button" phx-click="destroy_node" phx-value-uuid="<%= @node.uuid %>" class="danger">
   Destroy
 </button>
-<button type="button" phx-click="toggle_node_in_trash" phx-value="<%= @node.uuid %>" class="cancel">
+<button type="button" phx-click="toggle_node_in_trash" phx-value-uuid="<%= @node.uuid %>" class="cancel">
   Cancel
 </button>

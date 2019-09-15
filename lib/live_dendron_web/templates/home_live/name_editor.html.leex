@@ -7,7 +7,7 @@
   <input type="hidden" name="uuid" value="<%= @uuid %>">
   <%= text_input f, :name, class: class %>
   <button type="submit">OK</button>
-  <button type="button" phx-click="edit_node" phx-value="" class="cancel">Cancel</button>
+  <button type="button" phx-click="edit_node" phx-value-uuid="" class="cancel">Cancel</button>
 <% end %>
 <%= if error do %>
   <div style="color: red; margin-left: 3rem">

@@ -1,7 +1,7 @@
 <%= @node.name %>
-<span class="command-button" phx-click="edit_node" phx-value="<%= @node.uuid %>">
+<span class="command-button" phx-click="edit_node" phx-value-uuid="<%= @node.uuid %>">
   <%= fa_icon("edit") %>
 </span>
-<span class="command-button" phx-click="toggle_node_in_trash" phx-value="<%= @node.uuid %>">
+<span class="command-button" phx-click="toggle_node_in_trash" phx-value-uuid="<%= @node.uuid %>">
   <%= fa_icon("trash-alt") %>
 </span>

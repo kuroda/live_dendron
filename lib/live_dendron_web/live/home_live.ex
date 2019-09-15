@@ -16,15 +16,15 @@ defmodule LiveDendronWeb.HomeLive do
   end
 
   @doc false
-  def handle_event("select_team", "", socket), do: assign(socket, :team_editor, nil)
+  def handle_event("select_team", %{"team-id" => ""}, socket), do: assign(socket, :team_editor, nil)
 
-  def handle_event("select_team", id, socket) do
+  def handle_event("select_team", %{"team-id" => id}, socket) do
     team = Enum.find(socket.assigns.teams, fn t -> t.id == id end)
     socket = assign(socket, :team_editor, TeamEditor.construct(team))
     {:noreply, socket}
   end
 
-  def handle_event("toggle_team_field", "activated", socket) do
+  def handle_event("toggle_team_field", %{"name" => "activated"}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
         TeamEditor.toggle_activated(team_editor)
@@ -43,7 +43,7 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_event("toggle_group_expanded", uuid, socket) do
+  def handle_event("toggle_group_expanded", %{"uuid" => uuid}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
         TreeEditor.toggle_group_expanded(team_editor, uuid)
@@ -52,7 +52,7 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_event("edit_node", uuid, socket) do
+  def handle_event("edit_node", %{"uuid" => uuid}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
         TreeEditor.edit_node(team_editor, uuid)
@@ -61,7 +61,7 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_event("toggle_node_in_trash", uuid, socket) do
+  def handle_event("toggle_node_in_trash", %{"uuid" => uuid}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
         TreeEditor.toggle_node_in_trash(team_editor, uuid)
@@ -70,7 +70,7 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_event("destroy_node", uuid, socket) do
+  def handle_event("destroy_node", %{"uuid" => uuid}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
         TreeEditor.destroy_node(team_editor, uuid)
@@ -79,7 +79,7 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_event("add_member", uuid, socket) do
+  def handle_event("add_member", %{"uuid" => uuid}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
         TreeEditor.add_member(team_editor, uuid)
@@ -88,7 +88,7 @@ defmodule LiveDendronWeb.HomeLive do
     {:noreply, socket}
   end
 
-  def handle_event("add_group", uuid, socket) do
+  def handle_event("add_group", %{"uuid" => uuid}, socket) do
     socket =
       update(socket, :team_editor, fn team_editor ->
         TreeEditor.add_group(team_editor, uuid)
