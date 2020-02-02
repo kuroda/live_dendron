@@ -6,7 +6,7 @@ defmodule LiveDendronWeb.HomeLive do
 
   def render(assigns), do: LiveDendronWeb.HomeLiveView.render("main.html", assigns)
 
-  def mount(_session, socket) do
+  def mount(_params, _session, socket) do
     socket =
       socket
       |> assign(:teams, Core.list_teams())
