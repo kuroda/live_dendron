@@ -16,7 +16,8 @@ defmodule LiveDendronWeb.HomeLive do
   end
 
   @doc false
-  def handle_event("select_team", %{"team-id" => ""}, socket), do: assign(socket, :team_editor, nil)
+  def handle_event("select_team", %{"team-id" => ""}, socket),
+    do: assign(socket, :team_editor, nil)
 
   def handle_event("select_team", %{"team-id" => id}, socket) do
     team = Enum.find(socket.assigns.teams, fn t -> t.id == id end)
