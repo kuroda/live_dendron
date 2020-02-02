@@ -1,4 +1,4 @@
-FROM elixir:1.9
+FROM elixir:1.10
 
 RUN apt-get update
 RUN apt-get -y upgrade
