@@ -1,7 +1,7 @@
 <div class="tree-node">
-  <span class="toggler" phx-click="toggle_group_expanded" phx-value-uuid="<%= @group.uuid %>">
+  <a href="#" class="toggler" phx-click="toggle_group_expanded" phx-value-uuid="<%= @group.uuid %>">
     <%= if @group.expanded, do: fa_icon("angle-down"), else: fa_icon("angle-right") %>
-  </span>
+  </a>
   <%= if @group.getting_destroyed do %>
     <del><%= @group.name %></del>
   <% else %>
@@ -10,12 +10,12 @@
   <%= if @group.expanded do %>
     <% getting_destroyed = @group.in_trash or @group.getting_destroyed %>
     <%= if is_nil(@group.changeset) and not getting_destroyed do %>
-      <span class="command-button" phx-click="add_member" phx-value-uuid="<%= @group.uuid %>">
+      <a href="#" class="command-button" phx-click="add_member" phx-value-uuid="<%= @group.uuid %>">
         <%= fa_icon("user-plus") %>
-      </span>
-      <span class="command-button" phx-click="add_group" phx-value-uuid="<%= @group.uuid %>">
+      </a>
+      <a href="#" class="command-button" phx-click="add_group" phx-value-uuid="<%= @group.uuid %>">
         <%= fa_icon("folder-plus") %>
-      </span>
+      </a>
     <% end %>
     <%= for group <- @group.subgroups do %>
       <%= render "group.html", group: %{group | getting_destroyed: getting_destroyed} %>

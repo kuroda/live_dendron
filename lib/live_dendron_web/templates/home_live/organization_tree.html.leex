@@ -1,9 +1,9 @@
 <h2>Organization tree</h2>
 
 <div class="tree-node">
-  <span class="toggler" phx-click="toggle_group_expanded" phx-value-uuid="<%= @root.uuid %>">
+  <a href="#" class="toggler" phx-click="toggle_group_expanded" phx-value-uuid="<%= @root.uuid %>">
     <%= if @root.expanded, do: fa_icon("angle-down"), else: fa_icon("angle-right") %>
-  </span>
+  </a>
   <%= if @root.expanded do %>
     <span class="command-button" phx-click="add_member" phx-value-uuid="<%= @root.uuid %>">
       <%= fa_icon("user-plus") %>

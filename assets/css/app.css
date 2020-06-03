@@ -22,7 +22,7 @@ div.tree-node {
   padding: 0.5rem;
 }
 
-span.toggler, span.square {
+.toggler, .square {
   background-color: #444;
   color: white;
   width: 2.5rem;
@@ -33,19 +33,21 @@ span.toggler, span.square {
   user-select: none;
 }
 
-span.toggler[phx-click] {
+.toggler[phx-click] {
   cursor: pointer;
+  color: #fff;
 }
 
-span.toggler[phx-click]:hover {
+.toggler[phx-click]:hover {
   background-color: #844;
+  color: #fff;
 }
 
-span.command-button[phx-click] {
+.command-button[phx-click] {
   cursor: pointer;
 }
 
-span.command-button[phx-click]:hover {
+.command-button[phx-click]:hover {
   color: #a44;
 }
 
