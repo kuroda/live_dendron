@@ -11,9 +11,10 @@ defmodule LiveDendron.Application do
       # Start the Ecto repository
       LiveDendron.Repo,
       # Start the endpoint when the application starts
-      LiveDendronWeb.Endpoint
+      LiveDendronWeb.Endpoint,
       # Starts a worker by calling: LiveDendron.Worker.start_link(arg)
       # {LiveDendron.Worker, arg},
+      {Phoenix.PubSub, [name: LiveDendron.PubSub, adapter: Phoenix.PubSub.PG2]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

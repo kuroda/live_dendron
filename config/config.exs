@@ -15,7 +15,7 @@ config :live_dendron, LiveDendronWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "cpEwOwauUHjk3gHMRO6fmxhDK5lLvIWtdbRu6+rAnmqb2UAwl6qHHSCGXW/rLcRy",
   render_errors: [view: LiveDendronWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: LiveDendron.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: LiveDendron.PubSub,
   live_view: [
     signing_salt: "CSOuW9cBIOIRzBAW3N0iFrsN/ITixF+/"
   ]
